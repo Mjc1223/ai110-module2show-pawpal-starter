@@ -89,7 +89,9 @@ I decided that priority and available time mattered the most because essential p
 - Describe one tradeoff your scheduler makes.
 - Why is that tradeoff reasonable for this scenario?
 
-One tradeoff my scheduler makes is prioritizing important tasks over less urgent ones, which may cause some lower priority tasks to be left out if there is not enough time. This is reasonable because it ensures the pet's most important needs are handled first.
+One tradeoff my scheduler makes is prioritizing important tasks over less urgent ones, which may cause some lower priority tasks to be left out if there is not enough time. This is reasonable because it ensures the pet's most important needs are handled first. 
+
+Another tradeoff in my design is that the Scheduler acts as the central point for organizing all pet care tasks. This makes scheduling easier to manage in one place, but it could become overloaded if many pets and tasks are added. I chose this design because it keeps scheduling logic organized and makes it easier to sort tasks by priority and time.
 
 ---
 
