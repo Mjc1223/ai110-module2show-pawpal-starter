@@ -46,6 +46,11 @@ pip install -r requirements.txt
 
 Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
 
+Daily Plan:
+1. [Pending] Feed breakfast (Priority: high, Duration: 15m) - Pet: Milo)
+2. [Pending] Give medication (Priority: high, Duration: 10m) - Pet: Luna)
+3. [Pending] Morning walk (Priority: medium, Duration: 30m) - Pet: Milo)
+
 ```
 # e.g.:
 # Daily plan for Biscuit (Golden Retriever):
