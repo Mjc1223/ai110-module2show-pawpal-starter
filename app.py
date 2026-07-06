@@ -144,12 +144,14 @@ if st.button("Generate schedule"):
     scheduler = Scheduler(owner=owner)
     scheduler.generate_schedule()
     scheduler.sort_tasks()
+    scheduler.sort_by_time()
 
     if not scheduler.daily_plan:
         st.info("No tasks scheduled for today.")
     else:
         schedule_rows = [
             {
+                "time": task.scheduled_time or "TBD",
                 "task": task.task_name,
                 "priority": task.priority,
                 "duration": f"{task.duration}m",
@@ -162,3 +164,10 @@ if st.button("Generate schedule"):
         ]
         st.write("Scheduled tasks:")
         st.table(schedule_rows)
+
+        conflicts = scheduler.detect_conflicts()
+        if conflicts:
+            for warning in conflicts:
+                st.warning(warning)
+        else:
+            st.success("No scheduling conflicts detected.")

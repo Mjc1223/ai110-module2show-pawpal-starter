@@ -59,64 +59,47 @@ Daily Plan:
 #   ...
 ```
 
-## 🧪 Testing PawPal+
-
-```bash
-# Run the full test suite:
-pytest
-
-# Run with coverage:
-pytest --cov
-```
-
-Sample test output:
-
-```
-# Paste your pytest output here
-```
-
-## 📐 Smarter Scheduling
-
-> Fill in once you've implemented scheduling logic.
-
-| Feature | Method(s) | Notes |
-|---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
-
-## 📸 Demo Walkthrough
-
-Describe your app in numbered steps so a reader can follow along without watching a video:
-
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
-
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
-
 ## Smarter Scheduling
 
-### Sorting
-Scheduler.sort_by_time() sorts tasks by scheduled time in chronological order.
+| Feature | Method | Description |
+|---------|--------|-------------|
+| Task Sorting | Scheduler.sort_by_time() | Sorts the current daily plan by scheduled time in chronological order. |
+| Pet Filtering | Scheduler.filter_by_pet_name() | Returns tasks that belong to a specific pet. |
+| Status Filtering | Scheduler.filter_by_status() | Returns tasks that match a completed or pending status. |
+| Conflict Detection | Scheduler.detect_conflicts() | Returns warning messages when multiple tasks share the same scheduled time. |
+| Daily Recurrence | Task.mark_complete() | Creates the next daily task after a daily recurring task is completed. |
+| Weekly Recurrence | Task.mark_complete() | Creates the next weekly task after a weekly recurring task is completed. |
 
-### Filtering
-The scheduler collects only incomplete tasks from the owner's pets, so completed tasks are filtered out of the active daily plan.
+## Demo Walkthrough
 
-### Conflict Detection
-The scheduler checks tasks in the daily plan for matching scheduled_time values and prints a warning instead of crashing.
+1. Launch the Streamlit application to open the PawPal+ interface.
+2. Add owner information and create one or more pets.
+3. Create care tasks for the selected pet, including priority, duration, and frequency.
+4. Generate the schedule to view today's tasks in a clear table sorted by scheduled time.
+5. Review warning messages if two tasks share the same scheduled time.
+6. Mark a daily or weekly recurring task as complete to automatically create the next occurrence.
 
-### Recurring Tasks
-Completing a daily or weekly recurring task automatically creates the next occurrence using Python's timedelta.
+## Technologies Used
 
-# Testing PawPal+
+This project uses:
+
+- Python
+- Streamlit
+- Pytest
+- Dataclasses
+- Git
+- GitHub
+
+# 🧪 Testing PawPal+
 
 ## Running the Tests
 
 The test suite can be run with:
+
+```bash
+# Run with coverage:
+pytest --cov
+```
 
 ```bash
 python -m pytest
