@@ -82,12 +82,45 @@ If it does not, copy the Local URL shown in the terminal into your browser.
 
 Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
 
-Daily Plan:
+First Daily Plan:
 1. [Pending] Feed breakfast (Priority: high, Duration: 15m) - Pet: Milo)
 2. [Pending] Give medication (Priority: high, Duration: 10m) - Pet: Luna)
 3. [Pending] Morning walk (Priority: medium, Duration: 30m) - Pet: Milo)
 
 ```
+Tasks before sorting by time:
+- Feed breakfast: 09:30
+- Morning walk: 08:00
+- Give medication: 10:15
+- Evening check: 09:30
+
+Tasks after sorting by time:
+- Morning walk: 08:00
+- Feed breakfast: 09:30
+- Evening check: 09:30
+- Give medication: 10:15
+
+Conflict detection demo:
+- Conflict: Feed breakfast and Evening check both use 09:30.
+
+Recurring task demo:
+Daily recurring task before completion:
+- Feed breakfast | Frequency: daily | Due: 2026-07-05
+
+New daily recurring task created:
+- Feed breakfast | Frequency: daily | Due: 2026-07-06
+
+Weekly recurring task before completion:
+- Morning walk | Frequency: weekly | Due: 2026-07-05
+
+New weekly recurring task created:
+- Morning walk | Frequency: weekly | Due: 2026-07-12
+Daily Plan:
+1. [Done] Morning walk (Priority: medium, Duration: 30m) - Pet: Milo)
+2. [Done] Feed breakfast (Priority: high, Duration: 15m) - Pet: Milo)
+3. [Pending] Evening check (Priority: medium, Duration: 15m) - Pet: Luna)
+4. [Pending] Give medication (Priority: high, Duration: 10m) - Pet: Luna)
+
 # e.g.:
 # Daily plan for Biscuit (Golden Retriever):
 #   08:00 — Morning walk (30 min) [priority: high]
