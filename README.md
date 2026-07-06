@@ -31,6 +31,42 @@ python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
+## 🚀 Running PawPal+
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Mjc1223/ai110-module2show-pawpal-starter.git
+cd ai110-module2show-pawpal-starter
+```
+
+### 2. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Launch the application
+
+```bash
+streamlit run app.py
+```
+
+If Streamlit is not available on your PATH, run:
+
+```bash
+python -m streamlit run app.py
+```
+
+### 4. Open your browser
+
+Streamlit will automatically open:
+
+```
+http://localhost:8501
+```
+
+If it does not, copy the Local URL shown in the terminal into your browser.
 
 ### Suggested workflow
 
