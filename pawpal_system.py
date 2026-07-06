@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from datetime import date, timedelta
 from typing import List, Optional
 
 
@@ -8,10 +9,43 @@ class Task:
     duration: int
     priority: str
     completed: bool = False
+    scheduled_time: Optional[str] = None
+    frequency: str = "none"
+    due_date: date = field(default_factory=date.today)
+    pet_name: Optional[str] = None
 
-    def mark_complete(self) -> None:
-        """Mark the task as completed."""
+    def mark_complete(self) -> Optional["Task"]:
+        """Mark the task complete and create the next occurrence for daily or weekly tasks."""
         self.completed = True
+
+        normalized_frequency = self.frequency.lower()
+        if normalized_frequency == "daily":
+            next_due_date = self.due_date + timedelta(days=1)
+            return Task(
+                task_name=self.task_name,
+                duration=self.duration,
+                priority=self.priority,
+                completed=False,
+                scheduled_time=self.scheduled_time,
+                frequency=self.frequency,
+                due_date=next_due_date,
+                pet_name=self.pet_name,
+            )
+
+        if normalized_frequency == "weekly":
+            next_due_date = self.due_date + timedelta(days=7)
+            return Task(
+                task_name=self.task_name,
+                duration=self.duration,
+                priority=self.priority,
+                completed=False,
+                scheduled_time=self.scheduled_time,
+                frequency=self.frequency,
+                due_date=next_due_date,
+                pet_name=self.pet_name,
+            )
+
+        return None
 
     def edit_task(
         self,
@@ -37,7 +71,8 @@ class Pet:
     tasks: List[Task] = field(default_factory=list)
 
     def add_task(self, task: Task) -> None:
-        """Append a task to the pet's list of tasks."""
+        """Append a task to the pet and remember which pet owns it."""
+        task.pet_name = self.name
         self.tasks.append(task)
 
     def update_info(
@@ -86,7 +121,7 @@ class Scheduler:
         self.daily_plan: List[Task] = []
 
     def generate_schedule(self) -> None:
-        """Collect all incomplete tasks from the owner's pets."""
+        """Collect incomplete tasks from the owner's pets for the current daily plan."""
         self.task_list = []
         for pet in self.owner.pets:
             for task in pet.tasks:
@@ -96,13 +131,46 @@ class Scheduler:
         self.daily_plan = list(self.task_list)
 
     def sort_tasks(self) -> None:
-        """Sort tasks by priority level."""
+        """Sort tasks by priority level for the active daily plan."""
         priority_order = {"high": 1, "medium": 2, "low": 3}
 
         def priority_key(task: Task) -> int:
             return priority_order.get(task.priority.lower(), 99)
 
         self.daily_plan = sorted(self.task_list, key=priority_key)
+
+    def sort_by_time(self) -> None:
+        """Sort the current daily plan by scheduled time in chronological order."""
+        # Use a lambda so the sort order is based on each task's scheduled_time.
+        # Tasks without a time are treated as empty strings and will appear first.
+        self.daily_plan = sorted(
+            self.daily_plan,
+            key=lambda task: task.scheduled_time or "",
+        )
+
+    def detect_conflicts(self) -> List[str]:
+        """Return warnings for tasks that share the same scheduled time."""
+        warnings: List[str] = []
+
+        try:
+            for index, task in enumerate(self.daily_plan):
+                if not task.scheduled_time:
+                    continue
+
+                for other_task in self.daily_plan[index + 1 :]:
+                    if not other_task.scheduled_time:
+                        continue
+
+                    if task.scheduled_time == other_task.scheduled_time:
+                        warning = (
+                            f"Conflict: {task.task_name} and {other_task.task_name} "
+                            f"both use {task.scheduled_time}."
+                        )
+                        warnings.append(warning)
+        except Exception:
+            return []
+
+        return warnings
 
     def display_schedule(self) -> None:
         """Print the daily plan in a readable format."""

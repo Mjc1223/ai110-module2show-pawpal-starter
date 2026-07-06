@@ -1,3 +1,5 @@
+from datetime import date
+
 import streamlit as st
 
 from pawpal_system import Owner, Pet, Task, Scheduler
@@ -81,20 +83,30 @@ st.caption("Add a few tasks. These will be attached to the selected pet and used
 pet_names = [pet.name for pet in owner.pets]
 selected_pet_name = st.selectbox("Select pet", pet_names) if pet_names else None
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 with col1:
     task_title = st.text_input("Task title", value="Morning walk")
 with col2:
     duration = st.number_input("Duration (minutes)", min_value=1, max_value=240, value=20)
 with col3:
     priority = st.selectbox("Priority", ["low", "medium", "high"], index=2)
+with col4:
+    frequency = st.selectbox("Frequency", ["none", "daily", "weekly"], index=0)
+
+due_date = st.date_input("Due date", value=date.today())
 
 if st.button("Add task"):
     if not pet_names:
         st.warning("Please add a pet first.")
     else:
         selected_pet = next(pet for pet in owner.pets if pet.name == selected_pet_name)
-        task = Task(task_name=task_title, duration=int(duration), priority=priority)
+        task = Task(
+            task_name=task_title,
+            duration=int(duration),
+            priority=priority,
+            frequency=frequency,
+            due_date=due_date,
+        )
         selected_pet.add_task(task)
         st.success(f"Added task to {selected_pet.name}.")
 
@@ -109,6 +121,8 @@ if owner.pets:
                         "task": task.task_name,
                         "duration": task.duration,
                         "priority": task.priority,
+                        "frequency": task.frequency,
+                        "due_date": task.due_date,
                         "completed": task.completed,
                     }
                     for task in pet.tasks

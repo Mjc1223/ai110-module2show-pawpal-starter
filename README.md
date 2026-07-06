@@ -97,3 +97,17 @@ Describe your app in numbered steps so a reader can follow along without watchin
 5. <!-- Add more steps as needed -->
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
+
+## Smarter Scheduling
+
+### Sorting
+Scheduler.sort_by_time() sorts tasks by scheduled time in chronological order.
+
+### Filtering
+The scheduler collects only incomplete tasks from the owner's pets, so completed tasks are filtered out of the active daily plan.
+
+### Conflict Detection
+The scheduler checks tasks in the daily plan for matching scheduled_time values and prints a warning instead of crashing.
+
+### Recurring Tasks
+Completing a daily or weekly recurring task automatically creates the next occurrence using Python's timedelta.
