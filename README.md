@@ -111,3 +111,45 @@ The scheduler checks tasks in the daily plan for matching scheduled_time values 
 
 ### Recurring Tasks
 Completing a daily or weekly recurring task automatically creates the next occurrence using Python's timedelta.
+
+# Testing PawPal+
+
+## Running the Tests
+
+The test suite can be run with:
+
+```bash
+python -m pytest
+```
+
+## What the Tests Cover
+
+The automated tests verify that the scheduler:
+
+- Sorts tasks by scheduled time
+- Filters tasks by pet name
+- Filters tasks by completion status
+- Detects conflicts when two tasks share the same scheduled time
+- Creates the next daily recurring task
+- Creates the next weekly recurring task
+
+## Successful Test Run
+
+```text
+============================= test session starts ==============================
+platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\calho\Documents\ai110-module2show-pawpal-starter
+plugins: anyio-4.14.1
+collected 8 items                                                               
+
+tests\test_pawpal.py ........                                            [100%]
+
+============================== 8 passed in 0.15s ==============================
+```
+
+## Confidence Level
+
+Confidence: ⭐⭐⭐⭐⭐ (5/5)
+
+Reason:
+All implemented features passed automated tests, including sorting, filtering, conflict detection, and recurring task generation. While additional edge-case testing could always be added in the future, the current implementation behaves correctly for the required project functionality.

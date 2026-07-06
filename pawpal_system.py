@@ -120,6 +120,24 @@ class Scheduler:
         self.task_list: List[Task] = []
         self.daily_plan: List[Task] = []
 
+    def filter_by_pet_name(self, pet_name: str) -> List[Task]:
+        """Return all tasks belonging to the named pet."""
+        return [
+            task
+            for pet in self.owner.pets
+            for task in pet.tasks
+            if task.pet_name == pet_name
+        ]
+
+    def filter_by_status(self, completed: bool) -> List[Task]:
+        """Return tasks matching the requested completed status."""
+        return [
+            task
+            for pet in self.owner.pets
+            for task in pet.tasks
+            if task.completed is completed
+        ]
+
     def generate_schedule(self) -> None:
         """Collect incomplete tasks from the owner's pets for the current daily plan."""
         self.task_list = []
