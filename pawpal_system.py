@@ -10,11 +10,16 @@ class Task:
     completed: bool = False
 
     def mark_complete(self) -> None:
-        """Mark this task as completed."""
+        """Mark the task as completed."""
         self.completed = True
 
-    def edit_task(self, task_name: Optional[str] = None, duration: Optional[int] = None, priority: Optional[str] = None) -> None:
-        """Edit fields of the task. Only non-None values are applied."""
+    def edit_task(
+        self,
+        task_name: Optional[str] = None,
+        duration: Optional[int] = None,
+        priority: Optional[str] = None,
+    ) -> None:
+        """Update task details when new values are provided."""
         if task_name is not None:
             self.task_name = task_name
         if duration is not None:
@@ -32,11 +37,16 @@ class Pet:
     tasks: List[Task] = field(default_factory=list)
 
     def add_task(self, task: Task) -> None:
-        """Add a Task to this pet's task list."""
+        """Append a task to the pet's list of tasks."""
         self.tasks.append(task)
 
-    def update_info(self, breed: Optional[str] = None, age: Optional[int] = None, special_needs: Optional[str] = None) -> None:
-        """Update pet information fields when provided."""
+    def update_info(
+        self,
+        breed: Optional[str] = None,
+        age: Optional[int] = None,
+        special_needs: Optional[str] = None,
+    ) -> None:
+        """Update pet information when new values are provided."""
         if breed is not None:
             self.breed = breed
         if age is not None:
@@ -53,7 +63,7 @@ class Owner:
     pets: List[Pet] = field(default_factory=list)
 
     def add_pet(self, pet: Pet) -> None:
-        """Add a Pet to the owner's pets list."""
+        """Add a pet to the owner's pet list."""
         self.pets.append(pet)
 
     def update_preferences(self, preferences: str) -> None:
@@ -61,7 +71,7 @@ class Owner:
         self.preferences = preferences
 
     def view_schedule(self) -> None:
-        """Generate and display the schedule for all pets using Scheduler."""
+        """Show the scheduled tasks for all pets."""
         scheduler = Scheduler(self)
         scheduler.generate_schedule()
         scheduler.sort_tasks()
@@ -70,12 +80,13 @@ class Owner:
 
 class Scheduler:
     def __init__(self, owner: Owner) -> None:
+        """Initialize the scheduler for a given owner."""
         self.owner: Owner = owner
         self.task_list: List[Task] = []
         self.daily_plan: List[Task] = []
 
     def generate_schedule(self) -> None:
-        """Collect all incomplete tasks from the owner's pets into task_list."""
+        """Collect all incomplete tasks from the owner's pets."""
         self.task_list = []
         for pet in self.owner.pets:
             for task in pet.tasks:
@@ -85,7 +96,7 @@ class Scheduler:
         self.daily_plan = list(self.task_list)
 
     def sort_tasks(self) -> None:
-        """Sort tasks by priority (high -> medium -> low)."""
+        """Sort tasks by priority level."""
         priority_order = {"high": 1, "medium": 2, "low": 3}
 
         def priority_key(task: Task) -> int:
@@ -94,7 +105,7 @@ class Scheduler:
         self.daily_plan = sorted(self.task_list, key=priority_key)
 
     def display_schedule(self) -> None:
-        """Print the daily plan in a readable format, grouped by pet when possible."""
+        """Print the daily plan in a readable format."""
         if not self.daily_plan:
             print("No tasks scheduled for today.")
             return
